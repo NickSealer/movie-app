@@ -1,0 +1,121 @@
+<app-menu></app-menu>
+<div class="container py-5">
+
+    <!-- list movies -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <button type="button" class="btn btn-success float-right" style="margin-left: 10px;"
+                (click)="newMovie = {}">New movie</button>
+            <button type="button" class="btn btn-primary float-right" (click)="getMovies()">Reload movies</button>
+            Movies
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <tr class="bg-success">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Presentation days</th>
+                    <th></th>
+                </tr>
+                <tr *ngFor="let movie of movies">
+                    <td>{{ movie.id }}</td>
+                    <td>{{ movie.name }}</td>
+                    <td>{{ movie.description }}</td>
+                    <td>{{ movie.presentation_day }}</td>
+                    <td><button class="btn btn-info" (click)="getMovie(movie.id)">Details</button></td>
+                </tr>
+                <tr *ngIf="movies.length == 0">
+                    <td colspan="7" class="text-center">Loading</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- list movies -->
+     <!-- new movie -->
+     <div class="card mb-3" *ngIf="newMovie">
+            <div class="card-header">
+                <button type="button" class="btn btn-default float-right" (click)="newMovie = null">Close</button>
+                Create movie
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                                <input type="text" name="name" id="name" class="form-control" [(ngModel)]="newMovie.name" placeholder="Batman" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                                <input type="text" name="description" id="description" class="form-control" [(ngModel)]="newMovie.description" placeholder="mimimum 10 characters i.e: Movie about bat hero" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="presentation_day">Presentation days</label>
+                                <input type="text" name="presentation_day" id="presentation_day" class="form-control" [(ngModel)]="newMovie.presentation_day" placeholder="i.e: 1" required>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" (click)="createMovie()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- new movie -->
+        <!-- show movie -->
+    <div class="card" *ngIf="movie">
+            <div class="card-header card-title">
+                <button type="button" class="btn btn-primary float-right" (click)="movie = null">Close</button>
+                Movie: {{ movie.name }} {{ movie.created_at }}
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Nombre:</strong> {{ movie.name }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Description:</strong> {{ movie.description }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Presentation days:</strong> {{ movie.presentation_day }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Created at:</strong> {{ movie.created_at }}
+                    </div>
+                </div>
+                <hr>
+                <!-- edit movie -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                                <input type="text" name="name" id="name" class="form-control" value="{{ movie.name }}" [(ngModel)]="movie.name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                                <input type="text" name="description" id="description" class="form-control" value="{{ movie.description }}" [(ngModel)]="movie.description" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="presentation_day">Presentation days</label>
+                                <input type="text" name="presentation_day" id="presentation_day" class="form-control" value="{{ movie.presentation_day }}" [(ngModel)]="movie.presentation_day" required>
+                        </div>
+                    </div>
+                </div>
+                <!-- edit movie -->
+                <hr>
+                <button class="btn btn-success float-left" (click)="updateMovie(movie)">Update</button>
+                <button class="btn btn-danger float-right" (click)="deleteMovie(movie.id)">Delete</button>
+            </div>
+        </div>
+        <!-- show movie -->
+</div>

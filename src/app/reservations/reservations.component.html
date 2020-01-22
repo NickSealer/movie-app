@@ -1,0 +1,152 @@
+<app-menu></app-menu>
+<div class="container py-5">
+
+    <!-- list reservations -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <button type="button" class="btn btn-success float-right" style="margin-left: 10px;"
+                (click)="newReservation = {}">New reservation</button>
+            <button type="button" class="btn btn-primary float-right" (click)="getReservations()">Reload reservations</button>
+            Reservations
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <tr class="bg-success">
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Identification</th>
+                    <th>Celphone</th>
+                    <th>Email</th>
+                    <th>Movie</th>
+                    <th></th>
+                </tr>
+                <tr *ngFor="let reservation of reservations">
+                    <td>{{ reservation.id }}</td>
+                    <td>{{ reservation.name }}</td>
+                    <td>{{ reservation.identification }}</td>
+                    <td>{{ reservation.celphone }}</td>
+                    <td>{{ reservation.email }}</td>
+                    <td>{{ reservation.movie_id }}</td>
+                    <td><button class="btn btn-info" (click)="getReservation(reservation.id)">Details</button></td>
+                </tr>
+                <tr *ngIf="reservations.length == 0">
+                    <td colspan="7" class="text-center">Loading</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- list reservations -->
+     <!-- new reservation -->
+     <div class="card mb-3" *ngIf="newReservation">
+            <div class="card-header">
+                <button type="button" class="btn btn-default float-right" (click)="newReservation = null">Close</button>
+                Create reservation
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" [(ngModel)]="newReservation.name" class="form-control" placeholder="Will Smith" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="identification">Identification</label>
+                            <input type="text" name="identification" id="identification" [(ngModel)]="newReservation.identification" class="form-control" placeholder="1234567890123456789" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="celphone">Celphone</label>
+                            <input type="text" name="celphone" id="celphone" [(ngModel)]="newReservation.celphone" class="form-control" placeholder="123456789" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" [(ngModel)]="newReservation.email" class="form-control" placeholder="myemail@gamil.com" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="movie_id">Movie</label>
+                            <input type="number" name="movie_id" id="movie_id" [(ngModel)]="newReservation.movie_id" class="form-control" placeholder="i.e: 1" required>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" (click)="createReservation()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- new reservation -->
+        <!-- show reservation -->
+    <div class="card" *ngIf="reservation">
+            <div class="card-header card-title">
+                <button type="button" class="btn btn-primary float-right" (click)="reservation = null">Close</button>
+                Reservation: {{ reservation.name }} {{ reservation.identification }}
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Name:</strong> {{ reservation.name }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Identification:</strong> {{ reservation.identification }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Celphone:</strong> {{ reservation.celphone }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Email:</strong> {{ reservation.email }}
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Movie:</strong> {{ reservation.movie_id }}
+                    </div>
+                </div>
+                <hr>
+                <!-- edit reservation -->
+                <div class="row">
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ reservation.name }}" [(ngModel)]="reservation.name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="description">Identification</label>
+                                    <input type="text" name="identification" id="identification" class="form-control" value="{{ reservation.identification }}" [(ngModel)]="reservation.identification" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="presentation_day">Celphone</label>
+                                    <input type="text" name="celphone" id="celphone" class="form-control" value="{{ reservation.celphone }}" [(ngModel)]="reservation.celphone" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" id="email" class="form-control" value="{{ reservation.email }}" [(ngModel)]="reservation.email" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="movie_id">Movie</label>
+                                    <input type="number" name="movie_id" id="movie_id" class="form-control" value="{{ reservation.movie_id }}" [(ngModel)]="reservation.movie_id" required>
+                                </div>
+                            </div>
+                </div>
+                <!-- edit reservation -->
+                <hr>
+                <button class="btn btn-success float-left" (click)="updateReservation(reservation)">Update</button>
+                <button class="btn btn-danger float-right" (click)="deleteReservation(reservation.id)">Delete</button>
+            </div>
+        </div>
+        <!-- show reservation -->
+</div>
