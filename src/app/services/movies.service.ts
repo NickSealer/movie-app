@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,19 @@ export class MoviesService {
 
   constructor(private http: HttpClient) { }
 
-  list(){
-    return this.http.get(this.apiUrl + 'movies');
+  
+
+  movies(day: string = ""){
+    let params = new HttpParams();
+    params = params.append("day", day);
+    const options = {
+      params: params,
+    };
+    return this.http.get(this.apiUrl + 'movies', options);
+  }
+
+  moviesAvailables(){
+    return this.http.get(this.apiUrl + 'movies-availables');
   }
 
   show(id: string){

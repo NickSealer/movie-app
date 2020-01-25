@@ -11,18 +11,36 @@ export class MoviesComponent implements OnInit {
   movies: any = [];
   movie: any = null;
   newMovie: any = null;
+  imageUrl: string = "/assets/images/movie.jpg";
+  fileToUpload: File = null;
 
   constructor(private moviesService: MoviesService) { }
 
   ngOnInit() {
-    this.getMovies();
+    this.getAvailables();
   }
 
   getMovies(){
     this.movies = [];
-    this.moviesService.list().subscribe(res => {
+    this.moviesService.movies().subscribe(res => {
       this.movies = res;
     }, e => { console.log(e) })
+  }
+
+  searchMovieByDay(){
+    var day = (<HTMLInputElement>document.getElementById("day")).value;
+    this.movies =[];
+    this.moviesService.movies(day).subscribe(res =>{
+      this.movies = res;
+    }, e => { console.log(e) })
+  }
+
+  getAvailables(){
+    this.movies = [];
+    this.moviesService.moviesAvailables().subscribe(res => {
+      this.movies = res;
+    }, e => { console.log(e);
+     })
   }
    
   getMovie(id: string){
@@ -66,6 +84,18 @@ export class MoviesComponent implements OnInit {
         this.getMovies();
       }, e => { console.log(e) })
     }
+  }
+
+  fileInput(file: FileList){
+    this.fileToUpload = file.item(0);
+
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.imageUrl = event.target.result;
+    }
+    reader.readAsDataURL(this.fileToUpload);
+    console.log(this.fileToUpload);
+    
   }
 
 }

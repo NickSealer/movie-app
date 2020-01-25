@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReservationsService } from '../services/reservations.service';
+import { MoviesService } from '../services/movies.service';
 
 @Component({
   selector: 'app-reservations',
@@ -9,13 +10,15 @@ import { ReservationsService } from '../services/reservations.service';
 export class ReservationsComponent implements OnInit {
 
   reservations: any = [];
+  movies: any = [];
   reservation: any = null;
   newReservation: any = null;
 
-  constructor(private reservationsService: ReservationsService) { }
+  constructor(private reservationsService: ReservationsService, private moviesService: MoviesService) { }
 
   ngOnInit() {
     this.getReservations();
+    this.getAvailables();
   }
 
   getReservations(){
@@ -23,6 +26,14 @@ export class ReservationsComponent implements OnInit {
     this.reservationsService.list().subscribe(res => {
       this.reservations = res;
     }, e => { console.log(e) })
+  }
+
+  getAvailables(){
+    this.movies = [];
+    this.moviesService.moviesAvailables().subscribe(res => {
+      this.movies = res;
+    }, e => { console.log(e);
+     })
   }
    
   getReservation(id: string){
